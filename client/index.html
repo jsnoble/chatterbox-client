@@ -7,6 +7,8 @@
 
     <!-- dependencies -->
     <script src="bower_components/jquery/jquery.min.js"></script>
+    <script src="bower_components/underscore/underscore-min.js"></script>
+    <script src="bower_components/dompurify/purify.js"></script>
     <!-- your scripts -->
     <script src="env/config.js"></script>
     <script src="scripts/app.js"></script>
@@ -14,7 +16,17 @@
   <body>
     <div id="main">
       <h1>chatterbox</h1>
+      <button type="button" id="mesgButton">Show New Messages</button>
+      <form>
+        <input type = 'text' id = 'username' name = 'username' placeholder="username">
+        <input type = 'text' id = 'text' name = 'text' placeholder="text">
+        <input type = 'text' id = 'roomName' name = 'roomName' placeholder="room name">
+        <input type = 'submit' id = "submit">
+      </form>
       <!-- Your HTML goes here! -->
     </div>
+    <aside>chat room or friends go here</aside>
   </body>
 </html>
+
+
