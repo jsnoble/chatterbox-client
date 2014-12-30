@@ -4,16 +4,17 @@ $('document').ready(function(){
   var $main = $('#main');
 
 
-  var displayMessages = function() {
+  var displayMessages = function(obj) {
+    obj = obj || {};
     $.ajax ({
       url : 'https://api.parse.com/1/classes/chatterbox' ,
       type : 'GET' ,
       dataType : 'json' ,
-      data : {'order':'-createdAt'} ,
+      data : {'order':'-createdAt', 'limit': 50, "where": obj} ,
       success : function (data) {
           $(".chat").remove();
           _.each (data.results , function (obj) {
-            $main.append ('<div class="chat"><span class="username">' + DOMPurify.sanitize(obj.username) + '</span><span class="right">' + DOMPurify.sanitize(obj.roomname) + '</span><div>' + DOMPurify.sanitize(obj.text) + '</div></div>')
+            $main.append ('<div class="chat"><a href="#" class="username" name='+ DOMPurify.sanitize(obj.username)+'>' + DOMPurify.sanitize(obj.username) + '</a><span class="right">' + DOMPurify.sanitize(obj.roomname) + '</span><div id ="myText">' + DOMPurify.sanitize(obj.text) + '</div></div>')
           });
       } ,
       error : function () {
@@ -28,7 +29,6 @@ $('document').ready(function(){
 
 
 var postMessage = function(messagePost ) {
-
 
   $.ajax ({
 
@@ -60,7 +60,29 @@ var postMessage = function(messagePost ) {
   displayMessages();
 
 
-  $('#mesgButton').on('click',function(){ return displayMessages();});
+$('#mesgButton').on('click',function(){
+  //if room name is empty
+if($('#roomName').val().length ===0){
+    displayMessages();
+} else{
+  var roomname = $('#roomName').val();
+  var obj = {'roomname': roomname};
+  displayMessages(obj)}
+});
+
+  $('#joinRoom').on('click',function(){
+   var roomname = $('#roomName').val();
+    var obj = {'roomname': roomname};
+     displayMessages(obj);});
+
+
+$('div').on('click','a', function(event){
+  event.preventDefault();
+  var pName = this.text;
+  $("[name=" + pName+ "]").siblings().toggleClass("friend");
+
+});
+
 
 
 });

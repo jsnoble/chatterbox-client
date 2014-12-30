@@ -97,3 +97,8 @@ aside{
 .right{
     float: right;
 }
+
+.friend{
+    font-weight: bold;
+    color: green;
+}
